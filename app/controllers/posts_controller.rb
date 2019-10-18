@@ -109,6 +109,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :content, tag_ids:[], tags_attributes: [:tag_name] )
+    params.require(:post).permit(:title, :content, tag_ids:[], tags_attributes: [:tag_name] , images: [])
   end
 end

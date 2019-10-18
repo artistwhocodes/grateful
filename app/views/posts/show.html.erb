@@ -1,10 +1,17 @@
 <h1><%= @post.title %></h1>
+
+
+<p>
+  <% @post.images.each do |image| %>
+    <%= image_tag(image)%>
+  <% end %>
+ 
+</p>
+
 <p>
   <%= @post.content %>
 </p>
+
 <p>
 Tags: <%= @post.tags.map(&:tag_name).join(' ') %>
 </p>
-
-
- 

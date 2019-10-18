@@ -5,6 +5,12 @@
   </p>
 
   <p>
+    <%= f.label :images %>
+    <%= f.file_field :images, multiple: true %>
+  </p>
+
+
+  <p>
     <%= f.label "Content"%>
     <%= f.text_area :content%>
   </p>
