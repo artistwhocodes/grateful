@@ -1,0 +1,55 @@
+<%= form_for(@post) do |f| %>
+  <p>
+    <%= f.label "Title" %>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label "Content"%>
+    <%= f.text_area :content%>
+  </p>
+
+  <!---    #How can i build a checkbox for each tag % -->
+  <!---  #a bunch of checkboxes based on tags for the post's tag_ids??? -->
+
+  <!---
+    #will generate a checkbox named post[tag_ids][] for each tag in Tag.all
+    #it will use the :id as the value for the checkboxes
+    #and it will use the :name method as the label fo rthe checkbox
+  --->
+  <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :tag_name)%>
+  <!---
+  1. f is attached to the post.
+  2. the fields_for method looks to see if the object (post) attached to f responds
+  to a method called tags_attributes=
+    3a. If he underlying object (post) does respond to that method,  fields_for knows
+    that you're building a nested form.
+    3b. If the underlying object does not respond to that method, field_for assumes
+    you're doing something custom.
+
+  -->
+
+
+  <!---
+  % Tag.all.each do |t| %
+    <p>
+      <label for="tag_id_ %ct.id % "> %= t.name %></label>
+      <input type="checkbox" name="post[tag_ids][]" value=" %= t.id %>" id="tag_id_ %t.id %>">
+    </p>
+   % end %>
+  -->
+
+  <%= f.fields_for :tags, @post.tags.build do |tags_fields| %>
+    <%= tags_fields.label :tag_name, "Tag" %>
+    <%= tags_fields.text_field :tag_name %>
+  <% end %>
+
+    <!-- f.fields_for :tags, Tag.new do |tag_builder|
+      tag_builder.text_field :name
+     end   -->
+
+  <!-- <input type="text" id="post_tags_attributes_0_name" name="post[post_tags_attributes][0][name]"/>
+  <input type="text" id="post_tags_attributes_1_name" name="post[post_tags_attributes][1][name]"/> -->
+
+  <%= f.submit %>
+<% end %>
