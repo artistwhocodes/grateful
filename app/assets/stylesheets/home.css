@@ -255,7 +255,7 @@ nav .logo {
 }
 
 
-#post_tag , #user_name {
+#post_tag , #username_style {
   text-align: center;
   transform: rotate(-15deg);
   font-family: 'Sedgwick Ave Display', cursive;

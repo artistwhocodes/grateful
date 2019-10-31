@@ -8,14 +8,14 @@
       <div class="col-md-12">
         <img class="mb-4" src="/assets/gratefullogo.png" >
         <!--- url: "/signup"-->
-        <%= form_with model: @user, local: true , :class => 'form-signin' do |f| %>
+        <%= form_with model: @user, local: true , :id => 'not-today', :class => 'form-signin' do |f| %>
 
         <div>
           <%= f.text_field :name , class:'form-control' ,  placeholder: 'Type name here.' , autofocus: true %>
         </div>
 
         <div>
-          <%= f.text_field :username , class:'form-control' ,  placeholder: 'Type name here.' , autofocus: true %>
+          <%= f.text_field :username , class:'form-control' ,  placeholder: 'Type username here.' , autofocus: true %>
         </div>
         <br>
         <div>
@@ -34,6 +34,8 @@
         <div>
           <%= f.submit "Sign Up" , class:'btn btn-lg btn-dark btn-block' %>
         </div>
+
+          <p class="mt-5 mb-3 text-muted">&copy;oded with ✨<i class="fab fa-gratipay"></i>✨ 	<%= link_to " Go Back", root_path  , class: "fas fa-home edit_profile"  , 'data-toggle' => "tooltip" , 'data-placement' => "bottom" , 'title' => "Go back home"%></p>
         <% end %>
 
         <% if @user && @user.errors.any? %> <!-- check for error and if it is a user. cant call nil on errors -->
