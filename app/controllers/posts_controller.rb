@@ -1,39 +1,14 @@
 class PostsController < ApplicationController
+  before_action :authenticate
       # raise @post.inspect <--allows me to check if its hitting it
   def index
-    if params[:artist_id]
-      @user = User.find_by(id: params[:user_id]).posts
-    else @user.nil?
-        redirect_to users_path, alert: "User not found"
-    end
+    @posts = Post.all
+      @users = User.all
   end
 
 
-  # def index
-  #   if params[:artist_id]
-  #     @user = User.find_by(id: params[:user_id]).posts
-  #     if @user.nil?
-  #       redirect_to users_path, alert: "User not found"
-  #     end
-  #   else
-  #     @posts = Post.all
-  #   end
-  # end
-
 
   def show
-    # if params[:user_id]
-    #   @user = User.find_by(id: params[:user_id])
-    #   @post = @user.post.find_by(id: params[:id])
-    #   if @post.nil?
-    #     redirect_to user_posts_path(@user), alert: "post not found"
-    #   end
-    # else
-    #
-    #   if @post.nil?
-    #     redirect_to user_posts_path(@user), alert: "post not found"
-    #   end
-    # end
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
       @post = @user.posts.find_by(id: params[:id])
@@ -46,15 +21,26 @@ class PostsController < ApplicationController
   end
 
   def new
-    # Validate that new posts created for an artist
-    # via nested routing are created for valid artists,
-    #  and redirect to /artists if not.
-    #i basically copied this from the previous code along lab.
+
     if params[:user_id] && !User.exists?(params[:user_id])
       redirect_to users_path, alert: "User not found"
     else
+       @user = User.find_by(id: params[:user_id])
       @post = Post.new(user_id: params[:user_id])
     end
+  #   @user = User.find_by(id: params[:user_id])
+  # @user_ingredient_cost = @user.user_ingredient_costs.build()
+
+
+
+
+    # @post = Post.new(user_id: params[:user_id])
+
+   # @u.user_id
+   # Display 10 ingredient fields
+   # @post.posts.build()
+
+
   end
 
   def create
@@ -69,18 +55,17 @@ class PostsController < ApplicationController
   end
 
   def edit
-    #Validate that posts being edited via nested routing
-    #have a valid artist. Redirect to /artists if not.
+    # byebug
     if params[:user_id]
       user = User.find_by(id: params[:user_id])
       if user.nil?
-        redirect_to users_path, alert: "User not found"
+        redirect_to users_path, flash[:notice] = "post not found"
       else
         # Validate that posts being edited via nested
-        # routing are in the artist's posts collection.
-        # Redirect to /artists/id/posts if not.
+        # routing are in the user's posts collection.
+        # Redirect to /users/id/posts if not.
         @post = user.posts.find_by(id: params[:id])
-        redirect_to user_posts_path(user), alert: "post not found" if @post.nil?
+        redirect_to user_posts_path(user), flash[:notice] = "post not found" if @post.nil?
       end
     else
       @post = Post.find(params[:id])
@@ -100,10 +85,23 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    if params[:user_id]
     @post = Post.find(params[:id])
     @post.destroy
     flash[:notice] = "post deleted."
-    redirect_to posts_path
+    redirect_to user_posts_path(@user)
+    end
+  end
+
+  def search
+    if params[:search].blank?
+      redirect_to(root_path, alert: "Empty field!") and return
+    else
+      # @parameter = params[:search].downcase
+      # @results = Store.all.where("lower(name) LIKE :search", search: @parameter)
+      @results = Post.where("title LIKE ?", "#{params[:title]}%").where(user: current_user)
+
+    end
   end
 
   private

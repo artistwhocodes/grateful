@@ -7,9 +7,53 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,900,900i|Roboto:100,300,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gruppo|Modak|Poiret+One|Sedgwick+Ave+Display&display=swap" rel="stylesheet">
   </head>
 
   <body>
+  <% if logged_in? %>
+    <nav id="myTab" class="nav nav-pills nav-justified">
+      <a class="nav-item nav-link navbar-brand logo" href="#">
+        <img src="/assets/gratefulsvglogo.svg"  alt="">
+      </a>
+          <a href="<%=  user_path(current_user) %>" class="nav-item nav-link active">
+            <span class="fa-stack fa-2x">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
+          <a href="<%= new_user_post_path(current_user) %>" class="nav-item nav-link">
+              <span class="fa-stack fa-2x">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+              </span>
+          </a>
+
+          <%= form_tag(search_post_path, :method => "get" , :class => 'nav-item nav-link') do %>
+            <div class="input-group">
+              <%= search_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>
+              <div class="input-group-btn">
+                <%= button_tag "", :class => 'btn btn-info fas fa-search',:name => nil%>
+              </div>
+            </div>
+          <% end %>
+
+          <a href="/logout" class="nav-item nav-link">
+              <span class="fa-stack fa-2x">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-power-off fa-stack-1x fa-inverse"></i>
+              </span>
+          </a>
+
+            </nav>
+      <% end %>
+
     <%= yield %>
+
+
+
+
   </body>
 </html>

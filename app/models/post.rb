@@ -4,8 +4,17 @@ class Post < ApplicationRecord
   has_many :post_tags
   has_many :tags, through: :post_tags
 
+  validates :title, presence: { message: "must be given please" }
+  validates :title,  format: { without: /\s/ }
+  validates :content, presence: { message: "must be given please" }
 
-# accepts_nested_attributes_for :tags
+#  accepts_nested_attributes_for :tags, allow_destroy: true, reject_if: proc { |att| att['name'].blank? }
+
+#   accepts_nested_attributes_for :tags , :allow_destroy => true, :reject_if => :no_tags
+#
+# def no_tags(attributes)
+#   attributes[:tag_name].blank?
+# end
 
   # customize the way our tag is created
   #creating a new tag if it doesn't already exist with the current name

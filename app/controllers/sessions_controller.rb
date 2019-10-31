@@ -7,18 +7,20 @@ class SessionsController < ApplicationController
 
   # Log user in
   def create
-    @user = User.find(params[:user_name])
-    if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      redirect_to user_path(@user)
-    else
-      redirect_to signin_path
-    end
+      @user = User.find_by(username: params[:username])
+      if @user && @user.authenticate(params[:password])
+        session[:user_id] = @user.id
+        flash[:success] = "Welcome, #{@user.username}"
+        redirect_to user_path(@user)
+      else
+        flash[:notice] = "✨Improper credentials given✨"
+        render :new
+      end
   end
 
   # Log user out
   def destroy
-    session.clear
+    session[:user_id] = nil
     redirect_to root_path
   end
 

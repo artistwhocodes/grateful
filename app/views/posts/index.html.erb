@@ -1,7 +1,21 @@
-<ul>
-<% @posts.each do |post| %>
-  <li><%= display_user(post) %> - <%= link_to post.title, post_path(post) %></li>
-<% end %>
-</ul>
-<br>
-<%= link_to "Add New Post", new_post_path %>
+
+<div class="container">
+  <ul>
+  <% @posts.each do |post| %>
+
+  <li><%= link_to post.title, post_path(post) %></li>
+  <% end %>
+  </ul>
+  <br>
+
+
+
+
+
+
+
+
+  <%= link_to "Add New Post", new_post_path %>
+  "hellloooooo"
+
+</div>

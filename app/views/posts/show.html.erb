@@ -1,17 +1,38 @@
-<h1><%= @post.title %></h1>
 
+<div class="container">
+	<div class="row">
+		<div id="post_first_sentence" class="col-md-12">
+      <h1><span class="super_bold">Today</span> was great because of</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div id="title_post" class="col-md-12">
+        <%= @post.title %>
+		</div>
+	</div>
+  <div class="row">
+    <div id="post_second_sentence" class="offset-md-6 col-md-6 ">
+       what made it great was ...
+    </div>
+  </div>
+  <div class="row">
+    <div id="carousel_post" class="col-md-5">
+      <%= carousel_for(@post.images) %>
+      <div id="post_tag">
+      # <%= @post.tags.map(&:tag_name).join(' ') %>
+      </div>
+    </div>
+    <div id="content_post"class="col-md-7">
+      <p>
+				<%= @post.content %>
+				<br>
+				<%= link_to "Edit", edit_user_post_path(current_user)  %>
 
-<p>
-  <% @post.images.each do |image| %>
-    <%= image_tag(image)%>
-  <% end %>
- 
-</p>
+				<%= link_to "Delete", @post, :method => :delete, data: { confirm: "Are you sure?" } %>
+				<%= @post.created_at.strftime("%b %d, %Y") %>
+			</p>
+    </div>
 
-<p>
-  <%= @post.content %>
-</p>
+  </div>
 
-<p>
-Tags: <%= @post.tags.map(&:tag_name).join(' ') %>
-</p>
+</div>

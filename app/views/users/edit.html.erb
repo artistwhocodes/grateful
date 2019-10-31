@@ -1,9 +1,42 @@
-<h1>Editing <%= @user.name %></h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h1>My Current Photo</h1>
+        </div>
+        <div class="card-body">
+          <%= image_tag @user.image if @user.image.attached? %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h1>Edit/Update</h1>
+        </div>
+        <div class="card-body">
+          <%= form_with model: @user , :class => 'form-signin' do |f| %>
+          <div>
+          <h3>  <%= f.label :name %> </h3>
+            <%= f.text_field :name , class:'form-control'%>
+          </div>
+          <br>
+          <div>
+            <h3>   <%= f.label :username %>   </h3>
+            <%= f.text_field :username , class:'form-control' %>
+          </div>
+          <br>
+          <div>
+              <h3> <%= f.label "Change Image" %>   </h3>
+            <%= f.file_field :image %>
+          </div>
+          <br>
+        <center>  <%= f.submit class:'btn btn-lg btn-dark btn-block' %> </center>
+        <% end %>
+      </div>
+    </div>
 
-<%= form_for @user  do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-  <br />
-
-  <%= f.submit %>
-<% end %>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,71 @@
-<h1><%= @user.name %></h1>
-<ul>
-  <% @user.posts.each do |post| %>
-    <li><%= link_to post.title, user_post_path(@user, post) %></li>
-  <% end %>
-</ul>
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col-md">
+
+
+    <div class="card text-center">
+      <div class="row no-gutters">
+        <div id="user_photos" class="col-md-4">
+          <!-- <img src="..." class="card-img" alt="..."> -->
+          <%= image_tag @user.image if @user.image.attached?  %>
+          <div id="user_name">
+            #<%= @user.name %>
+          </div>
+        </div> <!-- col-md-4 -->
+        <div class="col-md-8">
+          <div class="inception">
+            <div id="profile_title" class="card-header">
+              <%= @user.username %>
+              <br>  <%= link_to ' Edit Profile', edit_user_path(@user) , class: "fas fa-cog edit_profile "%>
+            </div> <!-- profile_title-->
+          </div>
+          <div id="user_miniform" class="card-body">
+            <div id="user-section" >
+              <div id="post_count"  >
+                <span class="boldd"><%=  @user.posts.count %></span> things I'm grateful for.
+              </div>  <!--  post_count  -->
+
+            </div> <!--  row  -->
+
+            <p id="quote" class="card-text">
+                ❝ At the end of the day, you can either focus on what's tearing you apart
+                <br>or
+                <br> what's holding you together.❞
+            </p>
+            <div class="card-footer ">
+              Today, I'm currently grateful for <input id="miniGratefulForm" class="form-control" type="text" placeholder="type here">
+              <!-- <i id="miniGratefulForm_button" class="fas fa-sun fa-spin"></i> -->
+              <button id="miniGratefulForm_button" type="button" class="btn btn-outline-dark">enter</button>
+            </div> <!-- footer -->
+          </div> <!-- card-body fefwefwefwfwfeewefewwe-->
+        </div> <!-- col-md-8 -->
+
+      </div> <!-- row no-gutter -->
+    </div> <!-- card -->
+
+
+    <% @index = @user.posts.count + 1%>
+    <% @user.posts.order("created_at DESC").each do |post | %>
+
+      <div id="post_cards" class="card">
+        <div class="card-header">
+           <span class="num_round">
+             <%= @index -= 1%>
+           </span>
+           <span class="post_text">
+             <h4> <%= link_to post.title, user_post_path(@user, post) %> </h4>
+           </span>
+        </div> <!-- header -->
+
+        <div class="card-body">
+          <%= image_tag post.images.first if post.images.attached? %>
+        </div>  <!-- card-body -->
+      </div>   <!-- post-cards -->
+    <% end %>
+
+
+
+
+    </div> <!-- col-md -->
+  </div> <!-- row -->
+</div> <!-- container -->
