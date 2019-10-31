@@ -1,45 +1,53 @@
+<div id="new_form" class="container text-center">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h1>Edit Grateful Post</h1>
+        </div>
+        <div class="card-body">
+        <%= form_with model: @post, local: true , :class => 'form-signin'  do |f| %>
+          <p>
+            <h3><%= f.label "Title" %></h3>
+            <%= f.text_field :title ,  class:'form-control' , autofocus: true %>
+          </p>
+
+          <p>
+            <h3><%= f.label :images %></h3>
+            <%= f.file_field :images, multiple: true %>
+          </p>
 
 
+          <p>
+            <h3><%= f.label "Content"%></h3>
+            <%= f.text_area :content ,  class:'form-control' %>
+          </p>
+          <p>
+          <%= f.fields_for :tags, @post.tags.build do |tags_fields| %>
+            <h3><%= tags_fields.label :tag_name, "Tag" %></h3>
+            <%= tags_fields.text_field :tag_name ,  class:'form-control' %>
+          <% end %>
+          </p>
+            <!-- f.fields_for :tags, Tag.new do |tag_builder|
+              tag_builder.text_field :name
+             end   -->
 
+          <!-- <input type="text" id="post_tags_attributes_0_name" name="post[post_tags_attributes][0][name]"/>
+          <input type="text" id="post_tags_attributes_1_name" name="post[post_tags_attributes][1][name]"/> -->
 
-<%= form_with model: @post, local: true  do |f| %>
-  <p>
-    <%= f.label "Title" %>
-    <%= f.text_field :title ,  class:'form-control' , autofocus: true %>
-  </p>
+          <%= f.submit class:'btn btn-lg btn-dark btn-block' %>
+        <% end %>
 
-  <p>
-    <%= f.label :images %>
-    <%= f.file_field :images, multiple: true %>
-  </p>
+        <% if @post && @post.errors.any? %>
+          <% @post.errors.full_messages.each do |error|%>
 
+            <button type="button" class="btn btn-danger">
+            ✨<%= error %>✨
+            </button>
 
-  <p>
-    <%= f.label "Content"%>
-    <%= f.text_area :content%>
-  </p>
-  <p>
-  <%= f.fields_for :tags, @post.tags.build do |tags_fields| %>
-    <%= tags_fields.label :tag_name, "Tag" %>
-    <%= tags_fields.text_field :tag_name %>
-  <% end %>
-  </p>
-    <!-- f.fields_for :tags, Tag.new do |tag_builder|
-      tag_builder.text_field :name
-     end   -->
-
-  <!-- <input type="text" id="post_tags_attributes_0_name" name="post[post_tags_attributes][0][name]"/>
-  <input type="text" id="post_tags_attributes_1_name" name="post[post_tags_attributes][1][name]"/> -->
-
-  <%= f.submit %>
-<% end %>
-
-<% if @post && @post.errors.any? %>
-  <% @post.errors.full_messages.each do |error|%>
-
-    <button type="button" class="btn btn-danger">
-    ✨<%= error %>✨
-    </button>
-
-  <% end %>
-<% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

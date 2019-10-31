@@ -3,13 +3,12 @@ class PostsController < ApplicationController
       # raise @post.inspect <--allows me to check if its hitting it
   def index
     @posts = Post.all
-      @users = User.all
+    @users = User.all
   end
-
-
 
   def show
     if params[:user_id]
+
       @user = User.find_by(id: params[:user_id])
       @post = @user.posts.find_by(id: params[:id])
       if @post.nil?
@@ -20,28 +19,16 @@ class PostsController < ApplicationController
     end
   end
 
-  def new
 
+  def new
     if params[:user_id] && !User.exists?(params[:user_id])
       redirect_to users_path, alert: "User not found"
     else
        @user = User.find_by(id: params[:user_id])
       @post = Post.new(user_id: params[:user_id])
     end
-  #   @user = User.find_by(id: params[:user_id])
-  # @user_ingredient_cost = @user.user_ingredient_costs.build()
-
-
-
-
-    # @post = Post.new(user_id: params[:user_id])
-
-   # @u.user_id
-   # Display 10 ingredient fields
-   # @post.posts.build()
-
-
   end
+
 
   def create
     u = current_user
@@ -56,25 +43,14 @@ class PostsController < ApplicationController
 
   def edit
     # byebug
-    if params[:user_id]
-      user = User.find_by(id: params[:user_id])
-      if user.nil?
-        redirect_to users_path, flash[:notice] = "post not found"
-      else
-        # Validate that posts being edited via nested
-        # routing are in the user's posts collection.
-        # Redirect to /users/id/posts if not.
-        @post = user.posts.find_by(id: params[:id])
-        redirect_to user_posts_path(user), flash[:notice] = "post not found" if @post.nil?
-      end
-    else
       @post = Post.find(params[:id])
-    end
+      authorize(@post)
   end
 
   def update
-    @post = Post.find(params[:id])
 
+    @post = Post.find(params[:id])
+    authorize(@post)
     @post.update(post_params)
 
     if @post.save
@@ -85,12 +61,14 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if params[:user_id]
+
+
     @post = Post.find(params[:id])
     @post.destroy
     flash[:notice] = "post deleted."
-    redirect_to user_posts_path(@user)
-    end
+    # @user = User.find_by(id: params[:user_id])
+    redirect_to user_path(current_user)
+
   end
 
   def search

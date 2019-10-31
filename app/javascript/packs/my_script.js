@@ -49,12 +49,16 @@ document.addEventListener("turbolinks:load",function() {
   quicktitleform();
 
   function titledata(){
-    $('#flowers').val($wtf);
+    if ( $wtf == false )
+     $('#flowers').val("type here");
+    else
+     $('#flowers').val($wtf);
   }
   titledata();
 
-
-
+  $(function(){
+$('a').tooltip();
+  });
 
 
 });

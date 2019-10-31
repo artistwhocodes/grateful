@@ -16,7 +16,7 @@
           <div class="inception">
             <div id="profile_title" class="card-header">
               <%= @user.username %>
-              <br>  <%= link_to ' Edit Profile', edit_user_path(@user) , class: "fas fa-cog edit_profile "%>
+              <br>  <%= link_to ' Edit Profile', edit_user_path(@user) , class: "fas fa-cog edit_profile " , 'data-toggle' => "tooltip" , 'data-placement' => "bottom" , 'title' => "Edit User"%>
             </div> <!-- profile_title-->
           </div>
           <div id="user_miniform" class="card-body">

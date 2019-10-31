@@ -23,14 +23,25 @@
       </div>
     </div>
     <div id="content_post"class="col-md-7">
-      <p>
-				<%= @post.content %>
-				<br>
-				<%= link_to "Edit", edit_user_post_path(current_user)  %>
+			<div class="row">
+				<div class="col-md-12">
+	      	<div class="content_post_para">
+					<%= @post.content %>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card-footer">
+					<% if belong_to_user?(@post)%>
+						<%= link_to "  ", edit_user_post_path(current_user) , class: "fas fa-cog edit_profile"  , 'data-toggle' => "tooltip" , 'data-placement' => "bottom" , 'title' => "Edit Profile"%>
+  					<%= link_to "  ", user_post_path(@post), :method => :delete,  class: "far fa-trash-alt edit_profile", data: { confirm: "Are you sure?" } , 'data-toggle' => "tooltip" , 'data-placement' => "bottom" , 'title' => "Delete this post!"%>
 
-				<%= link_to "Delete", @post, :method => :delete, data: { confirm: "Are you sure?" } %>
-				<%= @post.created_at.strftime("%b %d, %Y") %>
-			</p>
+					<% end %>
+					<%= @post.created_at.strftime("%b %d, %Y") %>
+					</div>
+		 		</div>
+			</div>
     </div>
 
   </div>

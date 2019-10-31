@@ -27,21 +27,22 @@
 
 
 * **get google/facebook or signup/signin** [x]
-* **password_confirmation** [x]  authenticate
+* **delete post_img & user-img in Database** [x]
 * **authenticate** [x]
 * **helpers** [x]
 * **delete post_img & user-img in Database** [x]
-* **use layouts & partials** [x]
+
 
 ## CSS
-* login page **[x]**
-* sign up page **[x]**
 * 404 page **[x]**
-* User Dashboard **[x]**
+
 
 
 ## Done
 * welcome page = login in, sign up *[√]*
+  * **password_confirmation** [√]  
+  * **use layouts & partials** [√]
+  * **use layouts & partials** [√]
   * put all this in NOTE.md  [√]
   * Post index show pages *[√]*
   * upload pictures *[√]*
@@ -50,6 +51,10 @@
   * loging in *[√]*
   * sign up *[√]*
   * logging out *[√]*
+  * User Dashboard *[√]*
+  * login page *[√]*
+  * sign up page *[√]*
+  * User Dashboard *[√]*
 
 
 **Extra**
